@@ -14,6 +14,13 @@ namespace System.Web.NHaml
             _templateFactoryFactory = templateFactoryFactory;
         }
 
+        public string GetTemplateSource(ViewSource viewSource, Type templateBaseType)
+        {
+            var viewSourceCollection = new ViewSourceCollection { viewSource };
+            var className = viewSourceCollection.GetClassName();
+            return _templateFactoryFactory.GetTemplateSource(className, viewSourceCollection, templateBaseType);
+        }
+
         public TemplateFactory GetCompiledTemplate(ViewSource viewSource, Type templateBaseType)
         {
             return GetCompiledTemplate(new ViewSourceCollection { viewSource }, templateBaseType);

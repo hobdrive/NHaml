@@ -41,10 +41,16 @@ namespace System.Web.NHaml
             return CompileTemplateFactory(className, viewSourceList, typeof(TemplateBase.Template));
         }
 
-        public TemplateFactory CompileTemplateFactory(string className, ViewSourceCollection viewSourceList, Type baseType)
+        public string GetTemplateSource(string className, ViewSourceCollection viewSourceList, Type baseType)
         {
             var hamlDocument = BuildHamlDocument(viewSourceList);
             string templateCode = _treeWalker.Walk(hamlDocument, className, baseType, _imports);
+            return templateCode;
+        }
+
+        public TemplateFactory CompileTemplateFactory(string className, ViewSourceCollection viewSourceList, Type baseType)
+        {
+            string templateCode = GetTemplateSource(className, viewSourceList, baseType);
             var templateFactory = _templateFactoryCompiler.Compile(templateCode, className, _referencedAssemblyLocations);
             return templateFactory;
         }
