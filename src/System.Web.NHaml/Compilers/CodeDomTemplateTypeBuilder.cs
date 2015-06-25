@@ -47,6 +47,10 @@ namespace System.Web.NHaml.Compilers
             var tempFileName = Path.GetTempFileName();
             var tempAssemblyName = new FileInfo(Path.Combine(directoryInfo.FullName, tempFileName + ".dll"));
             var tempSymbolsName = new FileInfo(Path.Combine(directoryInfo.FullName, tempFileName + ".pdb"));
+            if (Type.GetType ("Mono.Runtime") != null)
+            {
+                tempSymbolsName = new FileInfo(Path.Combine(directoryInfo.FullName, tempFileName + ".dll.mdb"));
+            }
             try
             {
                 compilerParams.OutputAssembly = tempAssemblyName.FullName;
